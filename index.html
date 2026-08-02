@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Baby Shower Invitation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f8e9f1;
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .invitation-container {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    margin: 20px;
+  }
+
+  .invitation-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .rsvp-box {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    margin-bottom: 40px;
+  }
+
+  .rsvp-box h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #c2185b;
+  }
+
+  .rsvp-option {
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+
+  #guestCountBox {
+    display: none;
+    margin-top: 15px;
+  }
+
+  input[type="text"], input[type="number"], textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+    background: #c2185b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background: #a3154d;
+  }
+</style>
+
+<script>
+  function handleRSVP(choice) {
+    const guestBox = document.getElementById("guestCountBox");
+    if (choice === "yes") {
+      guestBox.style.display = "block";
+    } else {
+      guestBox.style.display = "none";
+    }
+  }
+
+  function sendMessage(type) {
+    const rsvp = document.querySelector('input[name="rsvp"]:checked');
+    const name = document.getElementById("guestName").value;
+
+    if (!name) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    if (!rsvp) {
+      alert("Please select Accept or Decline.");
+      return;
+    }
+
+    let message = "RSVP from: " + name + "%0AResponse: " + rsvp.value.toUpperCase();
+
+    if (rsvp.value === "yes") {
+      const guests = document.getElementById("guestCount").value;
+      const comment = document.getElementById("comment").value;
+
+      message += "%0AGuests: " + guests;
+      message += "%0AComment: " + comment;
+    }
+
+    const phone = "+13128048920"; // Replace with your number
+
+    if (type === "whatsapp") {
+      window.location.href = "https://wa.me/" + phone + "?text=" + message;
+    } else {
+      window.location.href = "sms:" + phone + "?body=" + message;
+    }
+  }
+</script>
+
+</head>
+
+<body>
+
+<div class="invitation-container">
+  <img src="BabyShower.jpeg" alt="Baby Shower Invitation">
+</div>
+
+<div class="rsvp-box">
+  <h3>RSVP</h3>
+
+  <label>Your Name:</label>
+  <input id="guestName" type="text" placeholder="Enter your name">
+
+  <div class="rsvp-option">
+    <label>
+      <input type="radio" name="rsvp" value="yes" onclick="handleRSVP('yes')">
+      Accept Invitation
+    </label>
+  </div>
+
+  <div class="rsvp-option">
+    <label>
+      <input type="radio" name="rsvp" value="no" onclick="handleRSVP('no')">
+      Decline Invitation
+    </label>
+  </div>
+
+  <div id="guestCountBox">
+    <label>How many people are coming?</label>
+    <input id="guestCount" type="number" min="1" placeholder="Number of guests">
+
+    <label style="margin-top:15px;">Comments:</label>
+    <textarea id="comment" rows="3" placeholder="Write a message..."></textarea>
+  </div>
+
+  <a class="btn" onclick="sendMessage('whatsapp')">Send via WhatsApp</a>
+  <a class="btn" onclick="sendMessage('sms')">Send via SMS</a>
+  Click the link to see the babylist: 
+  <a href="https://my.babylist.com/brisilda-merkaj" target="_blank">Babylist - Brisilda Merkaj</a>
+</div>
+
+</body>
+</html>
